@@ -181,6 +181,14 @@ namespace MailKit.Net.Smtp {
 			}
 		}
 
+		public System.Net.Security.SslStream SslStream
+		{
+			get
+			{
+				return Stream.Stream as System.Net.Security.SslStream;
+			}
+		}
+
 		/// <summary>
 		/// Get or set the local domain.
 		/// </summary>

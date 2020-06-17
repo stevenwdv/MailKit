@@ -54,6 +54,8 @@ namespace MailKit.Net.Smtp {
 		/// </exception>
 		SmtpCapabilities Capabilities { get; }
 
+		System.Net.Security.SslStream SslStream { get; }
+
 		/// <summary>
 		/// Get or set the local domain.
 		/// </summary>
