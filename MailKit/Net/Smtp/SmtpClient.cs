@@ -590,6 +590,8 @@ namespace MailKit.Net.Smtp {
 						capabilities |= SmtpCapabilities.StartTLS;
 					} else if (capability == "SMTPUTF8") {
 						capabilities |= SmtpCapabilities.UTF8;
+					} else if (capability == "REQUIRETLS") {
+						capabilities |= SmtpCapabilities.RequireTls;
 					}
 				}
 			}
