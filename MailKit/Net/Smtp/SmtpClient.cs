@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2020 Xamarin Inc. (www.xamarin.com)
+// Copyright (c) 2013-2020 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -1694,23 +1694,16 @@ namespace MailKit.Net.Smtp {
 			get; set;
 		}
 
-		static string GetAddrspec (FormatOptions options, MailboxAddress mailbox)
-		{
-			if (options.International)
-				return MailboxAddress.DecodeAddrspec (mailbox.Address);
-
-			return MailboxAddress.EncodeAddrspec (mailbox.Address);
-		}
-
 		async Task MailFromAsync (FormatOptions options, MimeMessage message, MailboxAddress mailbox, SmtpExtension extensions, long size, bool doAsync, CancellationToken cancellationToken)
 		{
+			var idnEncode = (extensions & SmtpExtension.UTF8) == 0;
 			var builder = new StringBuilder ("MAIL FROM:<");
 
-			var addrspec = GetAddrspec (options, mailbox);
+			var addrspec = mailbox.GetAddress (idnEncode);
 			builder.Append (addrspec);
 			builder.Append ('>');
 
-			if ((extensions & SmtpExtension.UTF8) != 0)
+			if (!idnEncode)
 				builder.Append (" SMTPUTF8");
 
 			if ((Capabilities & SmtpCapabilities.Size) != 0 && size != -1)
@@ -1831,7 +1824,8 @@ namespace MailKit.Net.Smtp {
 
 		async Task<bool> RcptToAsync (FormatOptions options, MimeMessage message, MailboxAddress mailbox, bool doAsync, CancellationToken cancellationToken)
 		{
-			var command = string.Format ("RCPT TO:<{0}>", GetAddrspec (options, mailbox));
+			var idnEncode = (Capabilities & SmtpCapabilities.UTF8) == 0;
+			var command = string.Format ("RCPT TO:<{0}>", mailbox.GetAddress (idnEncode));
 
 			if ((capabilities & SmtpCapabilities.Dsn) != 0) {
 				var notify = GetDeliveryStatusNotifications (message, mailbox);
@@ -2111,7 +2105,7 @@ namespace MailKit.Net.Smtp {
 
 			var extensions = visitor.SmtpExtensions;
 
-			if (format.International)
+			if ((Capabilities & SmtpCapabilities.UTF8) != 0 && (format.International || sender.IsInternational || recipients.Any (x => x.IsInternational)))
 				extensions |= SmtpExtension.UTF8;
 
 			if ((Capabilities & (SmtpCapabilities.Chunking | SmtpCapabilities.Size)) != 0 || progress != null) {

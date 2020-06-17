@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2020 Xamarin Inc. (www.xamarin.com)
+// Copyright (c) 2013-2020 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -494,6 +494,14 @@ namespace MailKit.Net.Imap {
 		/// </summary>
 		/// <value>The flagged folder.</value>
 		public ImapFolder Flagged {
+			get; private set;
+		}
+
+		/// <summary>
+		/// Gets the special folder containing important messages.
+		/// </summary>
+		/// <value>The important folder.</value>
+		public ImapFolder Important {
 			get; private set;
 		}
 
@@ -1170,6 +1178,7 @@ namespace MailKit.Net.Imap {
 					case "STATUS=SIZE":           Capabilities |= ImapCapabilities.StatusSize; break;
 					case "LIST-MYRIGHTS":         Capabilities |= ImapCapabilities.ListMyRights; break;
 					case "OBJECTID":              Capabilities |= ImapCapabilities.ObjectID; break;
+					case "REPLACE":               Capabilities |= ImapCapabilities.Replace; break;
 					case "XLIST":                 Capabilities |= ImapCapabilities.XList; break;
 					case "X-GM-EXT-1":            Capabilities |= ImapCapabilities.GMailExt1; QuirksMode = ImapQuirksMode.GMail; break;
 					case "XSTOP":                 QuirksMode = ImapQuirksMode.ProtonMail; break;
@@ -2405,6 +2414,8 @@ namespace MailKit.Net.Imap {
 				Drafts = folder;
 			if ((folder.Attributes & FolderAttributes.Flagged) != 0)
 				Flagged = folder;
+			if ((folder.Attributes & FolderAttributes.Important) != 0)
+				Important = folder;
 			if ((folder.Attributes & FolderAttributes.Junk) != 0)
 				Junk = folder;
 			if ((folder.Attributes & FolderAttributes.Sent) != 0)

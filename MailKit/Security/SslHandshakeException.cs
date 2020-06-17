@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2020 Xamarin Inc. (www.xamarin.com)
+// Copyright (c) 2013-2020 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -217,7 +217,7 @@ namespace MailKit.Security
 					for (int chainIndex = 0; chainIndex < validationInfo.ChainElements.Count; chainIndex++) {
 						var element = validationInfo.ChainElements[chainIndex];
 
-						if (element.ChainElementStatus.Length == 0)
+						if (element.ChainElementStatus == null || element.ChainElementStatus.Length == 0)
 							continue;
 
 						if (chainIndex == 0) {
@@ -237,7 +237,7 @@ namespace MailKit.Security
 					// Note: Because Mono does not include any elements in the chain (at least on macOS), we need
 					// to find the inner-most exception and append its Message.
 					if (!haveReason) {
-						var innerException = ex.InnerException;
+						var innerException = ex;
 
 						while (innerException.InnerException != null)
 							innerException = innerException.InnerException;
