@@ -3,7 +3,7 @@
 //
 // Author: Jeffrey Stedfast <jestedfa@microsoft.com>
 //
-// Copyright (c) 2013-2020 Xamarin Inc. (www.xamarin.com)
+// Copyright (c) 2013-2020 .NET Foundation and Contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -2126,13 +2126,14 @@ namespace MailKit.Net.Imap {
 				throw new NotSupportedException ("The IMAP server does not support the SPECIAL-USE nor XLIST extensions.");
 
 			switch (folder) {
-			case SpecialFolder.All:     return engine.All;
-			case SpecialFolder.Archive: return engine.Archive;
-			case SpecialFolder.Drafts:  return engine.Drafts;
-			case SpecialFolder.Flagged: return engine.Flagged;
-			case SpecialFolder.Junk:    return engine.Junk;
-			case SpecialFolder.Sent:    return engine.Sent;
-			case SpecialFolder.Trash:   return engine.Trash;
+			case SpecialFolder.All:       return engine.All;
+			case SpecialFolder.Archive:   return engine.Archive;
+			case SpecialFolder.Drafts:    return engine.Drafts;
+			case SpecialFolder.Flagged:   return engine.Flagged;
+			case SpecialFolder.Important: return engine.Important;
+			case SpecialFolder.Junk:      return engine.Junk;
+			case SpecialFolder.Sent:      return engine.Sent;
+			case SpecialFolder.Trash:     return engine.Trash;
 			default: throw new ArgumentOutOfRangeException (nameof (folder));
 			}
 		}

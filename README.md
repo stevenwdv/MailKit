@@ -118,6 +118,7 @@ motivate me to continue working on the project.
     * [APPENDLIMIT](https://tools.ietf.org/html/rfc7889)
     * [STATUS=SIZE](https://tools.ietf.org/html/rfc8438)
     * [OBJECTID](https://tools.ietf.org/html/rfc8474)
+    * [REPLACE](https://tools.ietf.org/html/rfc8508)
     * [XLIST](https://developers.google.com/gmail/imap_extensions)
     * [X-GM-EXT1](https://developers.google.com/gmail/imap_extensions) (X-GM-MSGID, X-GM-THRID, X-GM-RAW and X-GM-LABELS)
   * All APIs are cancellable.
@@ -160,25 +161,29 @@ which should improve performance of sending messages (although might not be very
 
 ## License Information
 
-MailKit is Copyright (C) 2013-2020 Xamarin Inc. and is licensed under the MIT license:
+```
+MIT License
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
+Copyright (C) 2013-2020 .NET Foundation and Contributors
 
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
 
 ## Installing via NuGet
 
@@ -223,15 +228,16 @@ directory and select **Git Sync...** in the menu. Once you do that, you'll need 
 
 In the top-level MailKit directory, there are a number of solution files; they are:
 
-* **MailKit.sln** - includes the projects for .NET 4.5, .NETStandard 1.3/1.6/2.0, Windows Universal 8.1,
-  Xamarin.Android, and Xamarin.iOS.
-* **MailKit.Mobile.sln** - includes only the Xamarin.iOS and Xamarin.Android projects.
-* **MailKit.Net45.sln** - includes only the .NET 4.5 project and the unit tests.
-
-If you don't have the Xamarin products, you'll probably want to open the MailKit.Net45.sln instead of MailKit.sln.
+* **MailKit.sln** - includes the projects for .NET 4.5/4.6/4.7/4.8, .NETStandard 1.3/1.6/2.0 as well as the unit tests.
 
 Once you've opened the appropriate MailKit solution file in [Visual Studio](https://www.visualstudio.com/downloads/),
 you can choose the **Debug** or **Release** build configuration and then build.
+
+Both Visual Studio 2017 and Visual Studio 2019 should be able to build MailKit without any issues, but older versions such as
+Visual Studio 2015 will require modifications to the projects in order to build correctly. It has been reported that adding
+NuGet package references to [Microsoft.Net.Compilers](https://www.nuget.org/packages/Microsoft.Net.Compilers/) >= 3.6.0
+and [System.ValueTuple](https://www.nuget.org/packages/System.ValueTuple/) >= 4.5.0 to the MimeKit and MailKit projects will
+allow them to build successfully.
 
 Note: The **Release** build will generate the xml API documentation, but the **Debug** build will not.
 
@@ -553,3 +559,11 @@ string. Please include the `Exception.StackTrace` as well. The `Message`, by its
 API documentation can be found at [http://www.mimekit.net/docs](http://www.mimekit.net/docs).
 
 A copy of the XML-formatted API reference documentation is also included in the NuGet package.
+
+## .NET Foundation
+
+MailKit is a [.NET Foundation](https://www.dotnetfoundation.org/projects) project.
+
+This project has adopted the code of conduct defined by the [Contributor Covenant](http://contributor-covenant.org/) to clarify expected behavior in our community. For more information, see the [.NET Foundation Code of Conduct](http://www.dotnetfoundation.org/code-of-conduct).
+
+General .NET OSS discussions: [.NET Foundation forums](https://forums.dotnetfoundation.org)
